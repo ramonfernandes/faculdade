@@ -5,30 +5,14 @@ import java.util.ArrayList;
 public class Processo implements Comparable {
 
     private int id;
+    private int fatiaDeTempoAtual;
     private int tempoChegada;
     private int tempoExecucao;
-    private int prioridade;
     private int duracaoRestante;
     private int tempoEncerramento;
     private int tempoEspera;
     ArrayList<Integer> operacoesDeES = new ArrayList<>();
     private int tempoEntradaESaida = 0;
-
-    public int getTempoEspera() {
-        return tempoEspera;
-    }
-
-    public void setTempoEspera(int tempoEspera) {
-        this.tempoEspera = tempoEspera;
-    }
-
-    public ArrayList<Integer> getOperacoesDeES() {
-        return operacoesDeES;
-    }
-
-    public void setOperacoesDeES(ArrayList<Integer> operacoesDeES) {
-        this.operacoesDeES = operacoesDeES;
-    }
 
     public int getTempoEntradaESaida() {
         return tempoEntradaESaida;
@@ -38,47 +22,21 @@ public class Processo implements Comparable {
         this.tempoEntradaESaida = tempoEntradaESaida;
     }
 
-    public int getTempoEncerramento() {
-        return tempoEncerramento;
-    }
-
     public void setTempoEncerramento(int tempoEncerramento) {
         this.tempoEncerramento = tempoEncerramento;
     }
 
-    public Processo(int id, int tempoChegada, int tempoExecucao, int prioridade) {
+    public Processo(int id, int tempoChegada, int tempoExecucao) {
         this.id = id;
         this.tempoChegada = tempoChegada;
         this.tempoExecucao = tempoExecucao;
         this.duracaoRestante = tempoExecucao;
-        this.prioridade = prioridade;
         this.tempoEncerramento = 0;
-    }
-
-    public Processo() {
-        this.id = 0;
-        this.tempoChegada = 0;
-        this.tempoExecucao = 0;
-        this.duracaoRestante = 0;
-        this.prioridade = 0;
+        this.fatiaDeTempoAtual = 4;
     }
 
     public int getTempoExecucao() {
         return tempoExecucao;
-    }
-
-    public Processo setTempoExecucao(int tempoExecucao) {
-        this.tempoExecucao = tempoExecucao;
-        return this;
-    }
-
-    public int getPrioridade() {
-        return prioridade;
-    }
-
-    public Processo setPrioridade(int prioridade) {
-        this.prioridade = prioridade;
-        return this;
     }
 
     public int getId() {
@@ -94,11 +52,6 @@ public class Processo implements Comparable {
         return tempoChegada;
     }
 
-    public Processo setTempoChegada(int tempoChegada) {
-        this.tempoChegada = tempoChegada;
-        return this;
-    }
-
     public int getDuracaoRestante() {
         return duracaoRestante;
     }
@@ -112,9 +65,17 @@ public class Processo implements Comparable {
         tempoEspera += 1;
     }
 
-    public boolean isOperacaoEntradaESaida() {
-        if (!operacoesDeES.isEmpty())
-            return (tempoExecucao - duracaoRestante) == operacoesDeES.get(0);
+    public boolean hasOperacaoEntradaESaida() {
+        if (!operacoesDeES.isEmpty()) {
+            Integer op = operacoesDeES.remove(0);
+            op--;
+            if (op == 0)
+                return true;
+            else {
+                operacoesDeES.add(0, op);
+                return false;
+            }
+        }
         return false;
     }
 
@@ -127,13 +88,13 @@ public class Processo implements Comparable {
             if (c == 'C')
                 trocasDeContexto++;
 
-    	Escalonador.somaTempoDeEspera((this.tempoEncerramento - this.tempoChegada - this.tempoExecucao - trocasDeContexto));
+        Escalonador.somaTempoDeEspera((this.tempoEncerramento - this.tempoChegada - this.tempoExecucao - trocasDeContexto));
         return "Tempo de Espera para P" + this.getId() + " é de " +
                 (this.tempoEncerramento - this.tempoChegada - this.tempoExecucao - trocasDeContexto);
     }
 
     public String getTempoDeResposta(String result) {
-    	Escalonador.somaTempoDeResposta((result.indexOf(String.valueOf(this.getId())) - this.getTempoChegada() - 1));
+        Escalonador.somaTempoDeResposta((result.indexOf(String.valueOf(this.getId())) - this.getTempoChegada() - 1));
         return "Tempo de Resposta para P" + this.getId() + " é de " + (result.indexOf(String.valueOf(this.getId())) - this.getTempoChegada() - 1);
     }
 
@@ -141,7 +102,7 @@ public class Processo implements Comparable {
         operacoesDeES.add(tempoDaOperacao);
     }
 
-    public void removeFirstFromListaEntradaESaida(){
+    public void removeFirstFromListaEntradaESaida() {
         operacoesDeES.remove(0);
     }
 
@@ -157,6 +118,18 @@ public class Processo implements Comparable {
     @Override
     public int compareTo(Object o) {
         return 0;
+    }
+
+    public int getFatiaDeTempoAtual() {
+        return fatiaDeTempoAtual;
+    }
+
+    public void decrementaFatiaDeTempoAtual() {
+        this.fatiaDeTempoAtual--;
+    }
+
+    public void setFatiaDeTempoAtual(int fatiaDeTempoAtual) {
+        this.fatiaDeTempoAtual = fatiaDeTempoAtual;
     }
 }
 

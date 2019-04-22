@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 //https://github.com/ramonfernandes/T1-Escalonador
 /**
- * Autores: Bárbara Mesquita Ferreira e Ramon Fernandes
+ * Autores: Ramon Fernandes
  *
  * Objetivo: O algoritmo deve receber um arquivo de texto descrevendo um número n de processos
  * estes processos possuem tempo de chegada, tempo de execução, prioridade e tempos de acesso a operações de E/S.
@@ -20,8 +20,7 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-    	
-    	
+
         Escalonador escalonador = new Escalonador();
         String result = escalonador.escalonadorRun();
         System.out.println(result);
@@ -30,7 +29,7 @@ public class App {
         for(Processo p : Escalonador.listaEncerrado)
             System.out.println(p.getTempoDeResposta(result));
 
-        System.out.println("Tempo de Espera Medio: " + (escalonador.getTempodeEsperaTotal()/escalonador.getNProcessos()));
-        System.out.println("Tempo de Resposta Medio: " + (escalonador.getTempodeRespostaTotal()/escalonador.getNProcessos()));
+        System.out.println("Tempo de Espera Medio: " + (escalonador.getTempodeEsperaTotal()/Config.nProcessos));
+        System.out.println("Tempo de Resposta Medio: " + (escalonador.getTempodeRespostaTotal()/Config.nProcessos));
     }
 }
