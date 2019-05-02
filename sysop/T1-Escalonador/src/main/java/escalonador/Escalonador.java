@@ -18,24 +18,19 @@ import static escalonador.Config.setupListaDeProcessosAguardando;
 
 public class Escalonador {
 
-    private static final String FILE_NAME = "file";
-    public static Scanner input = new Scanner(System.in);
-    public static List<Processo> listaProcessos = new ArrayList<Processo>();
+    private static final String FILE_NAME = "teste4.txt";
     private int tempo = 1;
     private LinkedList<Processo> filaDeProcessosProntosParaExecucao = new LinkedList<>();
     public LinkedList<Processo> filaOperacoesEntradaESaida = new LinkedList<>();
     private ArrayList<Processo> listaAguardando;
     public static ArrayList<Processo> listaEncerrado = new ArrayList<>();
     private String result = "";
-    private static int tempoDeRespostaMedio = 0;
-    private static int tempoDeEsperaMedio = 0;
-
 
     /* Método que orquestra as chamadas dos outros métodos
      * método "raíz"*/
     public String escalonadorRun() {
         try {
-            listaAguardando = (ArrayList) setupListaDeProcessosAguardando("file");
+            listaAguardando = (ArrayList) setupListaDeProcessosAguardando(FILE_NAME);
             while (existirProcessoPorSerExecutado()) {
                 adicionaProcessosProntosParaSeremExecutadosAFila();
                 while (!existeProcessoParaSerExecutadoNaLista()) {
@@ -124,22 +119,6 @@ public class Escalonador {
         return listaAguardando.size() != 0
                 || !filaDeProcessosProntosParaExecucao.isEmpty()
                 || !filaOperacoesEntradaESaida.isEmpty();
-    }
-
-    public static void somaTempoDeEspera(int valor) {
-        tempoDeEsperaMedio += valor;
-    }
-
-    public static void somaTempoDeResposta(int valor) {
-        tempoDeRespostaMedio += valor;
-    }
-
-    public int getTempodeRespostaTotal() {
-        return tempoDeRespostaMedio;
-    }
-
-    public int getTempodeEsperaTotal() {
-        return tempoDeEsperaMedio;
     }
 
     public int getFatiaTempo() {

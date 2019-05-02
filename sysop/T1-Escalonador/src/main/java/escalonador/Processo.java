@@ -10,8 +10,7 @@ public class Processo implements Comparable {
     private int tempoExecucao;
     private int duracaoRestante;
     private int tempoEncerramento;
-    private int tempoEspera;
-    ArrayList<Integer> operacoesDeES = new ArrayList<>();
+    private ArrayList<Integer> operacoesDeES = new ArrayList<>();
     private int tempoEntradaESaida = 0;
 
     public int getTempoEntradaESaida() {
@@ -61,10 +60,6 @@ public class Processo implements Comparable {
         return this;
     }
 
-    public void incrementaTempoEspera() {
-        tempoEspera += 1;
-    }
-
     public boolean hasOperacaoEntradaESaida() {
         if (!operacoesDeES.isEmpty()) {
             Integer op = operacoesDeES.remove(0);
@@ -79,31 +74,8 @@ public class Processo implements Comparable {
         return false;
     }
 
-    public String getTempoDeEspera(String result) {
-        int trocasDeContexto = 0;
-        for (Character c : result.substring(
-                result.indexOf(String.valueOf(this.getId())),
-                result.lastIndexOf(String.valueOf(this.getId())))
-                .toCharArray())
-            if (c == 'C')
-                trocasDeContexto++;
-
-        Escalonador.somaTempoDeEspera((this.tempoEncerramento - this.tempoChegada - this.tempoExecucao - trocasDeContexto));
-        return "Tempo de Espera para P" + this.getId() + " é de " +
-                (this.tempoEncerramento - this.tempoChegada - this.tempoExecucao - trocasDeContexto);
-    }
-
-    public String getTempoDeResposta(String result) {
-        Escalonador.somaTempoDeResposta((result.indexOf(String.valueOf(this.getId())) - this.getTempoChegada() - 1));
-        return "Tempo de Resposta para P" + this.getId() + " é de " + (result.indexOf(String.valueOf(this.getId())) - this.getTempoChegada() - 1);
-    }
-
     public void addOperacaoDeEntradaESaida(int tempoDaOperacao) {
         operacoesDeES.add(tempoDaOperacao);
-    }
-
-    public void removeFirstFromListaEntradaESaida() {
-        operacoesDeES.remove(0);
     }
 
     @Override

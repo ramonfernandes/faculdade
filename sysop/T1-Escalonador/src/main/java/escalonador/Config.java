@@ -20,7 +20,9 @@ public class Config {
                 separator + "src" +
                 separator + "main" +
                 separator + "java" +
-                separator + "escalonador/" +
+                separator + "escalonador" +
+                separator + "testFiles" +
+                separator +
                 fileName;
     }
 
