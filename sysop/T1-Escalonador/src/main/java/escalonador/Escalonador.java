@@ -18,7 +18,7 @@ import static escalonador.Config.setupListaDeProcessosAguardando;
 
 public class Escalonador {
 
-    private static final String FILE_NAME = "teste4.txt";
+    private static final String FILE_NAME = "file";
     private int tempo = 1;
     private LinkedList<Processo> filaDeProcessosProntosParaExecucao = new LinkedList<>();
     public LinkedList<Processo> filaOperacoesEntradaESaida = new LinkedList<>();
@@ -28,9 +28,9 @@ public class Escalonador {
 
     /* Método que orquestra as chamadas dos outros métodos
      * método "raíz"*/
-    public String escalonadorRun() {
+    public String escalonadorRun(String file) {
         try {
-            listaAguardando = (ArrayList) setupListaDeProcessosAguardando(FILE_NAME);
+            listaAguardando = (ArrayList) setupListaDeProcessosAguardando(file);
             while (existirProcessoPorSerExecutado()) {
                 adicionaProcessosProntosParaSeremExecutadosAFila();
                 while (!existeProcessoParaSerExecutadoNaLista()) {
