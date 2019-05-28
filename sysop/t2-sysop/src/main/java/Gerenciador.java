@@ -8,20 +8,6 @@ public class Gerenciador {
     private FaixaDeMemoria faixaDeMemoria;
     private List<Bloco> listAguardando;
 
-    /*
-     Autor: Ramon Fernandes
-     Data: 22 de Novembro
-
-     O problema consiste em receber uma faixa de memória com blocos a serem adionados na mesma
-    * o algoritmo deve fazer a gestão destes blocos, inserindo-os, removendo-os e guardando os que não conseguirem ser
-    * alocados para sua inserção caso memória seja liberada*/
-
-    /*Observações sobre o uso do algoritmo:
-     *       - O arquivo de arquivo que será lido deve ser configurado passando o nome do mesmo
-     *           no método setup
-     *       - Para rodar o código execute o test TestRun na classe GerenciadorDeMemoriaTest
-     */
-
     // Configura a faixa de memória, recebendo seu inicio e final
     public void setupFaixaDeMemoria(String mi, String mf) {
         this.faixaDeMemoria = new FaixaDeMemoria(Integer.valueOf(mi.replaceAll("\\s+", "")),
