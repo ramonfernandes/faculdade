@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class Gerenciador {
 
@@ -28,6 +29,7 @@ public class Gerenciador {
     }
 
     public List<Bloco> run(List<String> blocos) {
+        Scanner sc = new Scanner(System.in);
         listAguardando = new ArrayList<>();
         if (isNull(faixaDeMemoria))
             System.out.println("faixa de memória não configurada");
@@ -45,7 +47,9 @@ public class Gerenciador {
                         System.out.println("Não foi possivel alocar o bloco em memória");
                         System.out.println("Adicionando bloco a lista de aguarde");
                         if (getEspacoLivreTotal() > blocoAtual.getTamanhoBloco())
-                            System.out.println("Espaço livre fragmentado pela memória");
+                            System.out.println("FRAGMENTAÇÃO EXTERNA: Espaço livre fragmentado pela memória");
+                        System.out.println(faixaDeMemoria.printList());
+                        sc.next();
                         listAguardando.add(blocoAtual);
                     }
                 }

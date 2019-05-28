@@ -79,6 +79,10 @@ public class FaixaDeMemoria {
         return end - begin >= bloco.getTamanhoBloco();
     }
 
+    public String printList(){
+        return printList(blocos);
+    }
+
     //imprime a lista
     public String printList(List<Bloco> list) {
         String result = "";
