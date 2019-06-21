@@ -46,11 +46,13 @@ public class Gerenciador {
                     if (!faixaDeMemoria.fetchToFaixaDeMemoria(blocoAtual)) {
                         System.out.println("Não foi possivel alocar o bloco em memória");
                         System.out.println("Adicionando bloco a lista de aguarde");
-                        System.out.println(faixaDeMemoria.printList(faixaDeMemoria.getBlocos()));
-                        sc.next();
-                        if (getEspacoLivreTotal() > blocoAtual.getTamanhoBloco())
-                            System.out.println("DESFRAGMENTAÇÃO EXTERNA: Espaço livre fragmentado pela memória");
                         listAguardando.add(blocoAtual);
+                        if (getEspacoLivreTotal() > blocoAtual.getTamanhoBloco()) {
+                            System.out.println("DESFRAGMENTAÇÃO EXTERNA: Espaço livre fragmentado pela memória");
+                            System.out.println(faixaDeMemoria.printList(faixaDeMemoria.getBlocos()));
+                            System.out.println("Tamanho do Bloco: " + blocoAtual.getTamanhoBloco());
+                            sc.next();
+                        }
                     }
                 }
                 if (bloco[0].equals("L")) {
